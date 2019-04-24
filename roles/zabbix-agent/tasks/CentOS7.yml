@@ -1,0 +1,23 @@
+---
+    - name: Instalando Zabbix Agent
+      yum:
+        name: https://repo.zabbix.com/zabbix/4.0/rhel/7/x86_64/zabbix-agent-4.0.5-1.el7.x86_64.rpm
+        state: present
+
+    - name: 
+      yum:
+        name: epel-release
+        enablerepo: extras
+        state: present
+
+    - name: Aplicando config do Zabbix
+      template:
+        src: templates/zabbix_agentd.conf.j2
+        dest: /etc/zabbix/zabbix_agentd.conf
+      notify:
+        - Restart Zabbix Agent
+
+    - name: Iniciar Zabbix com sistema
+      service:
+        name: zabbix-agent
+        enabled: yes

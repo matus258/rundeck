@@ -1,0 +1,6 @@
+---
+zabbix_server_ip: '3.82.250.243'
+zabbix_hostmetadata: 'os-linux'
+zabbix_hostname: ""
+access_key: ""
+secret_key: ""

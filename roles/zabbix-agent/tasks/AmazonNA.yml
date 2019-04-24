@@ -1,0 +1,24 @@
+---
+    - name: Instalando Zabbix Agent para Amazon 2
+      yum:
+        name: https://repo.zabbix.com/zabbix/4.0/rhel/7/x86_64/zabbix-agent-4.0.5-1.el7.x86_64.rpm
+        state: present
+      when: ansible_distribution_version == "(Karoo)"
+
+    - name: Instalando Zabbix Agent para Amazon
+      yum:
+        name: https://repo.zabbix.com/zabbix/4.0/rhel/6/x86_64/zabbix-agent-4.0.4-1.el6.x86_64.rpm
+        state: present
+      when: ansible_distribution_version != "(Karoo)"
+
+    - name: Aplicando config do Zabbix
+      template:
+        src: templates/zabbix_agentd.conf.j2
+        dest: /etc/zabbix/zabbix_agentd.conf
+      notify:
+        - Restart Zabbix Agent
+
+    - name: Iniciar Zabbix com sistema
+      service:
+        name: zabbix-agent
+        enabled: yes
